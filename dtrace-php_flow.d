@@ -52,14 +52,14 @@ self int depth;
 
 dtrace:::BEGIN
 {
-	printf("%3s %-16s %-16s -- %s\n", "C", "TIME(us)", "FILE", "FUNC");
+	printf("%-16s -- %s\n", "TIME(us)", "FUNC");
 }
 
 php*:::function-entry
 /arg0/
 {
-	printf("%3d %-16d %-16s %*s-> %s\n", cpu, timestamp / 1000, 
-	    basename(copyinstr(arg1)), self->depth * 2, "", copyinstr(arg0));
+	printf("%-16d %*s-> %s\n", timestamp / 1000, 
+	     self->depth * 2, "", copyinstr(arg0));
 	self->depth++;
 }
 
@@ -67,6 +67,6 @@ php*:::function-return
 /arg0/
 {
 	self->depth -= self->depth > 0 ? 1 : 0;
-	printf("%3d %-16d %-16s %*s<- %s\n", cpu, timestamp / 1000,
-	    basename(copyinstr(arg1)), self->depth * 2, "", copyinstr(arg0));
+	printf("%-16d %*s<- %s\n", timestamp / 1000,
+	    self->depth * 2, "", copyinstr(arg0));
 }
