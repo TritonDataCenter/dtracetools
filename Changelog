@@ -4,3 +4,7 @@ package is available in pkgsrc: 'dtracetools'
 
 dtracetools-0.1
 * initial release
+
+dtracetools-x.x
+* removed dtrace-pathopens.d
+* updated dtrace-php_flow.d to work
