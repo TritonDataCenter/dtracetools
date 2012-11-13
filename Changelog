@@ -8,3 +8,4 @@ dtracetools-0.1
 dtracetools-x.x
 * removed dtrace-pathopens.d
 * updated dtrace-php_flow.d to work
+* added dtrace-slowhttpdconnect-stacks.d dtrace-topcallsbyprocess.d
