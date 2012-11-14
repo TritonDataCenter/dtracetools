@@ -14,3 +14,4 @@ dtracetools-x.x
 * removed dtrace-mmapfiles.d
 * updated dtrace-filebyproc.d to work
 * removed dtrace-runocc.d
+* removed dtrace-swapinfo.d
