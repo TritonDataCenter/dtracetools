@@ -10,3 +10,4 @@ dtracetools-x.x
 * updated dtrace-php_flow.d to work
 * added dtrace-slowhttpdconnect-stacks.d dtrace-topcallsbyprocess.d
 * removed dtrace-uname-a.d dtrace-weblatency.d
+* removed dtrace-wpm.d
