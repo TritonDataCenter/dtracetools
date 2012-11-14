@@ -11,3 +11,4 @@ dtracetools-x.x
 * added dtrace-slowhttpdconnect-stacks.d dtrace-topcallsbyprocess.d
 * removed dtrace-uname-a.d dtrace-weblatency.d
 * removed dtrace-wpm.d dtrace-loads.d
+* removed dtrace-mmapfiles.d
