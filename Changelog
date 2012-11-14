@@ -12,3 +12,5 @@ dtracetools-x.x
 * removed dtrace-uname-a.d dtrace-weblatency.d
 * removed dtrace-wpm.d dtrace-loads.d
 * removed dtrace-mmapfiles.d
+* updated dtrace-filebyproc.d to work
+* removed dtrace-runocc.d
