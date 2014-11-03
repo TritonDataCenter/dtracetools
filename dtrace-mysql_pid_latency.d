@@ -4,8 +4,6 @@
  *
  * USAGE: ./mysql_pid_latency.d -p mysqld_PID
  *
- * TESTED: these pid-provider probes may only work on some mysqld versions.
- *	5.0.51a: ok
  */
 
 #pragma D option quiet
@@ -15,12 +13,12 @@ dtrace:::BEGIN
 	printf("Tracing PID %d... Hit Ctrl-C to end.\n", $target);
 }
 
-pid$target::*dispatch_command*:entry
+mysql$target::*dispatch_command*:query-start
 {
 	self->start = timestamp;
 }
 
-pid$target::*dispatch_command*:return
+mysql$target::*dispatch_command*:query-done
 /self->start/
 {
 	@time = quantize(timestamp - self->start);

@@ -4,8 +4,6 @@
  *
  * USAGE: ./mysql_pid_avg.d -p mysqld_PID
  *
- * TESTED: these pid-provider probes may only work on some mysqld versions.
- *	5.0.51a: ok
  */
 
 #pragma D option quiet
@@ -17,12 +15,12 @@ dtrace:::BEGIN
 	    "AVG(ms)", "MAX(ms)");
 }
 
-pid$target::*dispatch_command*:entry
+mysql$target::*dispatch_command*:query-start
 {
 	self->start = timestamp;
 }
 
-pid$target::*dispatch_command*:return
+mysql$target::*dispatch_command*:query-done
 /self->start && (this->time = (timestamp - self->start))/
 {
 	@avg = avg(this->time);
@@ -30,13 +28,13 @@ pid$target::*dispatch_command*:return
 	@num = count();
 }
 
-pid$target::*dispatch_command*:return
+mysql$target::*dispatch_command*:query-done
 /self->start && (this->time > 1000000000)/
 {
 	@slow = count();
 }
 
-pid$target::*dispatch_command*:return
+mysql$target::*dispatch_command*:query-done
 {
 	self->start = 0;
 }

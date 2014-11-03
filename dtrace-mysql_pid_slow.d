@@ -4,8 +4,6 @@
  *
  * USAGE: ./mysql_pid_slow.d -p mysqld_PID min_ms
  *
- * TESTED: these pid-provider probes may only work on some mysqld versions.
- *	5.0.51a: ok
  */
 
 #pragma D option quiet
@@ -28,14 +26,14 @@ dtrace:::BEGIN
 	printf(" %-8s %-8s %s\n", "TIME(ms)", "CPU(ms)", "QUERY");
 }
 
-pid$target::*dispatch_command*:entry
+mysql$target::*dispatch_command*:query-start
 {
-	self->query = copyinstr(arg2);
+	self->query = copyinstr(arg0);
 	self->start = timestamp;
 	self->vstart = vtimestamp;
 }
 
-pid$target::*dispatch_command*:return
+mysql$target::*dispatch_command*:query-done
 /self->start && (timestamp - self->start) > min_ns/
 {
 	this->time = (timestamp - self->start) / 1000000;
@@ -43,7 +41,7 @@ pid$target::*dispatch_command*:return
 	printf(" %-8d %-8d %S\n", this->time, this->vtime, self->query);
 }
 
-pid$target::*dispatch_command*:return
+mysql$target::*dispatch_command*:query-done
 {
 	self->query = 0;
 	self->start = 0;
