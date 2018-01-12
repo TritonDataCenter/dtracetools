@@ -2,6 +2,10 @@ DTraceTools are all of the DTrace scripts we provide
 to customers that work inside SmartMachines.  This
 package is available in pkgsrc: 'dtracetools'
 
+dtracetools-1.0
+* moved to github
+* tagged 1.0 to cover existing tags up to and including 0.7
+
 dtracetools-0.1
 * initial release
 
